@@ -2,13 +2,15 @@ import { Request, Response } from "express";
 import { Product } from "./interfaces";
 import markt from "./database";
 
+let lastProductId = 0
+
 const create = (req: Request, res: Response): Response => {
     const expirationDate = new Date();
     expirationDate.setFullYear(expirationDate.getFullYear() + 1)
    
     const newProduct: Product = {
         ...req.body,
-        id: markt.length + 1,
+        id: ++lastProductId,
         expirationDate
     };
 
@@ -64,7 +66,6 @@ const partialUpdate = (req: Request, res: Response): Response => {
 
     return res.status(200).json(updateProduct)
 }
-
 
 
 
